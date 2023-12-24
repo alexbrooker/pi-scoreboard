@@ -6,9 +6,12 @@ import sys
 #GPIO.setup([PIN1, PIN2], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 pygame.init()
-# Detect current screen resolution
-infoObject = pygame.display.Info()
-SCREEN_WIDTH, SCREEN_HEIGHT = infoObject.current_w, infoObject.current_h
+
+# Get the desktop sizes
+desktop_sizes = pygame.display.get_desktop_sizes()
+
+# Select an appropriate window size based on the desktop sizes
+SCREEN_WIDTH, SCREEN_HEIGHT = desktop_sizes[0]  # Choose the appropriate index if multiple displays are detected
 
 # Set the screen to the full resolution
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
@@ -26,12 +29,13 @@ BLUE = pygame.Color('blue')
 
 # Fonts
 font = pygame.font.Font(None, 74)
-background_image = pygame.image.load('./data/background.png')
 
 # Calculate positions
-center_x = SCREEN_WIDTH // 2
-top_y = SCREEN_HEIGHT // 4
-bottom_y = 3 * SCREEN_HEIGHT // 4
+# Get the Pygame window size
+window_width, window_height = screen.get_width(), screen.get_height()
+center_x = window_width // 2
+top_y = window_height // 8
+bottom_y = 2 * window_height // 4
 
 def render_text_with_outline(text, font, main_color, outline_color, outline_width):
     # Render the main text
@@ -53,8 +57,10 @@ def render_text_with_outline(text, font, main_color, outline_color, outline_widt
     return outline_surface
 
 def draw_scoreboard():
-    screen.blit(background_image, (0, 0))  # Draw the background image
-
+    background_image = pygame.image.load('./data/background.png')
+    background_image = pygame.transform.scale(background_image, (window_width, window_height))
+    screen.blit(background_image, (0, 0))
+    
     # Player names
     player1_name = "Player 1"
     player2_name = "Player 2"
@@ -72,7 +78,7 @@ def draw_scoreboard():
     player_one_score_pos = (center_x // 2) - (score_player1_text.get_width() // 2)
     player_two_score_pos = center_x + (center_x // 2) - (score_player2_text.get_width() // 2)
     
-    # Draw the text on the screen
+    # Draw the outline coloured text on the screen
     # (adjust x, y positions as needed)
     screen.blit(score_player1_text, (player_one_score_pos, bottom_y))
     screen.blit(score_player2_text, (player_two_score_pos, bottom_y))
@@ -102,7 +108,14 @@ while running:
             if event.key == pygame.K_ESCAPE:  # Press ESC to exit
                 pygame.quit()
                 sys.exit()
-
+            elif event.key == pygame.K_UP:
+                score_player1 += 1
+            elif event.key == pygame.K_DOWN:
+                score_player1 -= 1
+            elif event.key == pygame.K_LEFT:
+                score_player2 += 1
+            elif event.key == pygame.K_RIGHT:
+                score_player2 -= 1
  #   if GPIO.input(PIN1) == GPIO.HIGH:
  #       score_player1 += 1
  #   if GPIO.input(PIN2) == GPIO.HIGH:
