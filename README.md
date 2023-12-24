@@ -40,7 +40,7 @@ cd scoreboard-game
 ## Usage
 Run the Python script:
 ```bash
-python scoreboard.py
+python app.py
 ```
 The game will launch in full-screen mode, and you'll see the player names and scores on the screen.
 
