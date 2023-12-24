@@ -57,7 +57,7 @@ def render_text_with_outline(text, font, main_color, outline_color, outline_widt
     return outline_surface
 
 def draw_scoreboard():
-    background_image = pygame.image.load('./data/background.png')
+    background_image = pygame.image.load('./data/background.bmp')
     background_image = pygame.transform.scale(background_image, (window_width, window_height))
     screen.blit(background_image, (0, 0))
     
@@ -68,7 +68,7 @@ def draw_scoreboard():
     # Fonts
     pygame.font.init()
     label_font = pygame.font.Font(pygame.font.get_default_font(), 100)
-    score_font = pygame.font.Font(pygame.font.get_default_font(), 350)  # Larger font for scores
+    score_font = pygame.font.Font(pygame.font.get_default_font(), 250)  # Larger font for scores
 
     # Create outlined text
     score_player1_text = render_text_with_outline(str(score_player1), score_font, BLUE, WHITE, 2)
