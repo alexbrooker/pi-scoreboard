@@ -28,7 +28,7 @@ RED = pygame.Color('red')
 BLUE = pygame.Color('blue')
 
 # Fonts
-font = pygame.font.Font(None, 74)
+font = pygame.font.Font(pygame.font.get_default_font(), 74)
 
 # Calculate positions
 # Get the Pygame window size
